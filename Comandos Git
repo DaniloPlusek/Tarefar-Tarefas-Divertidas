@@ -1,0 +1,28 @@
+# Comandos mais usados
+- git status
+Verifica o status/condição da branch em que você está trabalhando, arquivos modificados, criados e exluídos
+$ git status
+
+- git fetch
+É usado para baixar commits, arquivos e referências de um repositório remoto para o seu repositório local sem
+necessariamente fazer um merge das mudanças.
+$ git fetch
+
+- git add
+Após criar um arquivo, adicione o arquivo no rastreamento do Git. No Terminal, use o comando git add seguido do nome do arquivo ou
+somente . para adicionar todos os arquivos ainda não rastreados.
+$ git add .
+
+- git commit
+Depois de adicionar o arquivo a ser rastreado, confirme as alterações a serem rastreadas usando o Git. No Terminal, use git commit
+- m seguido por uma mensagem curta para confirmar as mudanças.
+$ git commit -m "commit inicial"
+
+- git push
+Depois de confirmar as alterações, envie as alterações de sua máquina local para o repositório remoto. No Terminal, use o comando 
+git push seguido do nome da branch que você está enviando.
+$ git push origin (nome da brainch)
+
+- git pull
+Serve para atualizar a pasta local com o conteúdo do github.
+$ git pull origin main
