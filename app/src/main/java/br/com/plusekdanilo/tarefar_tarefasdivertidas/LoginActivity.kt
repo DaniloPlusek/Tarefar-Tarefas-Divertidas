@@ -1,5 +1,6 @@
 package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,10 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
-            // TODO: Lógica de autenticação.
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        // TODO: Lógica de autenticação.
         }
     }
 }
