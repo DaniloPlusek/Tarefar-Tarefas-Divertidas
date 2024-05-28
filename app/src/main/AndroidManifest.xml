@@ -26,6 +26,8 @@
             android:exported="true"
             android:screenOrientation="landscape" >
         </activity>
+        <activity android:name=".CadastroActivity" />
+
     </application>
 
 </manifest>
