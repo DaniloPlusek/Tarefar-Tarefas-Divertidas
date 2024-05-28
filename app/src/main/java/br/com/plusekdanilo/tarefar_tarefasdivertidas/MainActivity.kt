@@ -2,6 +2,8 @@ package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Esconde a barra de título
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        // Esconde a barra de status
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         setContentView(R.layout.activity_main)
 
         tarefasRecyclerView = findViewById(R.id.recyclerView)
@@ -27,12 +37,24 @@ class MainActivity : AppCompatActivity() {
         val tarefas = listOf(
             Tarefa("Tarefa 1", "Descrição da Tarefa 1"),
             Tarefa("Tarefa 2", "Descrição da Tarefa 2"),
-            Tarefa("Tarefa 3", "Descrição da Tarefa 3")
+            Tarefa("Tarefa 3", "Descrição da Tarefa 3"),
+            Tarefa("Tarefa 4", "Descrição da Tarefa 4"),
+            Tarefa("Tarefa 5", "Descrição da Tarefa 5"),
+            Tarefa("Tarefa 6", "Descrição da Tarefa 6"),
+            Tarefa("Tarefa 7", "Descrição da Tarefa 7"),
+            Tarefa("Tarefa 8", "Descrição da Tarefa 8"),
+            Tarefa("Tarefa 9", "Descrição da Tarefa 9"),
+            Tarefa("Tarefa 10", "Descrição da Tarefa 10"),
+            Tarefa("Tarefa 11", "Descrição da Tarefa 11"),
+            Tarefa("Tarefa 12", "Descrição da Tarefa 12"),
+            Tarefa("Tarefa 13", "Descrição da Tarefa 13"),
+            Tarefa("Tarefa 14", "Descrição da Tarefa 14"),
+            Tarefa("Tarefa 15", "Descrição da Tarefa 15"),
         )
 
         // Inicialize o RecyclerView com um Adapter e um LayoutManager
         tarefasRecyclerView.adapter = TarefaAdapter(tarefas)
-        tarefasRecyclerView.layoutManager = LinearLayoutManager(this)
+        tarefasRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         // Adicione um OnClickListener para o cadeado
         lockImageView.setOnClickListener {
