@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 
 class CadastroActivity : AppCompatActivity() {
@@ -38,6 +39,14 @@ class CadastroActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "As senhas não correspondem", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+
+        backButton.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()  // Fecha a CadastroActivity
         }
 
     }
