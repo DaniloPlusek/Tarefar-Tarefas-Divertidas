@@ -56,9 +56,9 @@ class MainActivity : AppCompatActivity() {
         tarefasRecyclerView.adapter = TarefaAdapter(tarefas)
         tarefasRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // Adicione um OnClickListener para o cadeado
         lockImageView.setOnClickListener {
-            // Apresente a janela de autenticação
+            val dialog = AdminLoginDialogFragment()
+            dialog.show(supportFragmentManager, "AdminLoginDialogFragment")
         }
 
         // Adicione um OnClickListener para o personagem
