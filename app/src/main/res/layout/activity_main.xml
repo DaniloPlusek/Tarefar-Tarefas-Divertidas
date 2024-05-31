@@ -50,6 +50,4 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.98" />
 
-    <!-- Adicione outros elementos da imagem aqui -->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
