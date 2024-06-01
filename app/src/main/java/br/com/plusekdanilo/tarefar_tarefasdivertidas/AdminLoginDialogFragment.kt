@@ -1,6 +1,7 @@
 package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,9 +52,12 @@ class AdminLoginDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        val displayMetrics = DisplayMetrics()
+        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         val params: ViewGroup.LayoutParams = dialog!!.window!!.attributes
-        params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        params.width = (displayMetrics.widthPixels * 0.30).toInt()
+        params.height = (displayMetrics.heightPixels * 0.65).toInt()
         dialog!!.window!!.attributes = params as WindowManager.LayoutParams
     }
+
 }
