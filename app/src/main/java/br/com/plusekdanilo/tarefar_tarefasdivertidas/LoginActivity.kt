@@ -25,19 +25,28 @@ class LoginActivity : AppCompatActivity() {
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            // Cria uma instância de DatabaseHelper e verifica se o responsável existe no banco de dados
             val dbHelper = DatabaseHelper(this)
             val cursor = dbHelper.getResponsavel(username)
 
-            if (cursor.moveToFirst()) {
+            if (cursor.moveToFirst()) { // Verifica se o usuário existe
                 val senhaIndex = cursor.getColumnIndex("Senha")
                 if (senhaIndex != -1) {
                     val dbPassword = cursor.getString(senhaIndex)
                     if (dbPassword == password) {
-                        // Se a autenticação for bem-sucedida, inicie a MainActivity
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()  // Fecha a LoginActivity
+                        // Login bem-sucedido
+                        val idUsuarioIndex = cursor.getColumnIndex("ID_Usuario")
+                        if (idUsuarioIndex != -1) {
+                            val idUsuario = cursor.getInt(idUsuarioIndex)
+
+                            // Passe o ID do usuário para a MainActivity através da Intent
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.putExtra("USER_ID", idUsuario)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            // A coluna "ID_Usuario" não existe no cursor (isso não deve acontecer)
+                            Toast.makeText(this, "Erro ao obter ID do usuário", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         Toast.makeText(this, "Senha incorreta", Toast.LENGTH_SHORT).show()
                     }
@@ -45,11 +54,10 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "A coluna 'Senha' não existe", Toast.LENGTH_SHORT).show()
                 }
             } else {
+                // Usuário não encontrado
                 Toast.makeText(this, "Responsável não encontrado", Toast.LENGTH_SHORT).show()
             }
         }
-
-
 
         registerTextView.setOnClickListener {
             val intent = Intent(this, CadastroActivity::class.java)
