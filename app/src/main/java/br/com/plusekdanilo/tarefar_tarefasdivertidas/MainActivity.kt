@@ -10,6 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.plusekdanilo.tarefar_tarefasdivertidas.toTarefaList
@@ -20,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var characterImageView: ImageView
     private var loggedUserId: Int = -1
     private lateinit var dbHelper: DatabaseHelper
+
+    // Variáveis pro codego experimental da Su
+    private lateinit var tarefaViewModel: TarefaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +56,30 @@ class MainActivity : AppCompatActivity() {
         lockImageView = findViewById(R.id.lockImageView)
         characterImageView = findViewById(R.id.characterImageView)
 
-        val tarefas = dbHelper.getTarefasDoUsuario(loggedUserId).toTarefaList()
-//        dbHelper.addTarefa("Tarefa Exemplo", "Tarefa apenas para exemplo", loggedUserId, null, dbHelper)
+        //var tarefas = dbHelper.getTarefasDoUsuario(loggedUserId).toTarefaList()
+
 //        dbHelper.deleteTarefa(1)
 
         // Inicialize o RecyclerView com um Adapter e um LayoutManager
-        tarefasRecyclerView.adapter = TarefaAdapter(tarefas)
+        //val tarefaAdapter = TarefaAdapter(tarefas)
+
+        // Codego experimental da Su
+        tarefaViewModel = ViewModelProvider(this)[TarefaViewModel::class.java]
+
+        tarefaViewModel.tarefas.observe(this) { tarefas ->
+            val tarefaAdapter = TarefaAdapter(tarefas)
+            tarefasRecyclerView.adapter = tarefaAdapter
+        }
+
+        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste", descricao = "Teste"))
+
+
+        //tarefasRecyclerView.adapter = tarefaAdapter
         tarefasRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        //dbHelper.addTarefa("Batata", "Comer batata", loggedUserId, null, dbHelper)
+        //tarefas = dbHelper.getTarefasDoUsuario(loggedUserId).toTarefaList()
+        //tarefaAdapter.notifyDataSetChanged()
 
         lockImageView.setOnClickListener {
             val dialog = AdminLoginDialogFragment()
