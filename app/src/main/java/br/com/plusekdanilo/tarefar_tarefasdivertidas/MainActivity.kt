@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         // Esconde a barra de status
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         setContentView(R.layout.activity_main)
 
@@ -71,11 +72,17 @@ class MainActivity : AppCompatActivity() {
             tarefasRecyclerView.adapter = tarefaAdapter
         }
 
-        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste", descricao = "Teste"))
+        val tarefa = tarefaViewModel.getTarefaByTitulo("Teste")
+        if (tarefa == null) { // Cria a tarefa apenas se ela não existir
+            tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste", descricao = "Teste"))
+        }
 
+        // Comando para deletar tarefas excedentes
+//        tarefaViewModel.deleteTarefa(tarefaViewModel.getTarefaByTitulo("Teste")!!.id)
 
         //tarefasRecyclerView.adapter = tarefaAdapter
-        tarefasRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        tarefasRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         //dbHelper.addTarefa("Batata", "Comer batata", loggedUserId, null, dbHelper)
         //tarefas = dbHelper.getTarefasDoUsuario(loggedUserId).toTarefaList()

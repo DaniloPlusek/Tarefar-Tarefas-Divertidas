@@ -6,12 +6,14 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TarefaViewModel(application: Application) : AndroidViewModel(application) {
     private val tarefaDAO: TarefaDAO
     private val viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     init {
         val db = AppDatabase.getDatabase(application)
@@ -20,14 +22,22 @@ class TarefaViewModel(application: Application) : AndroidViewModel(application) 
 
     val tarefas: LiveData<List<Tarefa>> = tarefaDAO.getAllTarefas()
 
+    fun getTarefaById(id: Int): Tarefa = runBlocking {
+        scope.async { tarefaDAO.getTarefa(id) }.await()
+    }
+
+    fun getTarefaByTitulo(titulo: String): Tarefa = runBlocking {
+        scope.async { tarefaDAO.getTarefaByTitulo(titulo) }.await()
+    }
+
     fun insertTarefa(tarefa: Tarefa) {
-        uiScope.launch {
+        scope.launch {
             tarefaDAO.insertTarefa(tarefa)
         }
     }
 
     fun deleteTarefa(id: Int) {
-        uiScope.launch {
+        scope.launch {
             tarefaDAO.deleteTarefa(id)
         }
     }

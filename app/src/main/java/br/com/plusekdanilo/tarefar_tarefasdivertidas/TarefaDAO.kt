@@ -11,6 +11,12 @@ interface TarefaDAO {
     @Query("SELECT * FROM Tarefas")
     fun getAllTarefas(): LiveData<List<Tarefa>>
 
+    @Query("SELECT * FROM Tarefas WHERE id = :id")
+    fun getTarefa(id: Int): Tarefa
+
+    @Query("SELECT * FROM Tarefas WHERE titulo = :titulo LIMIT 1")
+    fun getTarefaByTitulo(titulo: String): Tarefa
+
     @Insert
     fun insertTarefa(tarefa: Tarefa)
 
