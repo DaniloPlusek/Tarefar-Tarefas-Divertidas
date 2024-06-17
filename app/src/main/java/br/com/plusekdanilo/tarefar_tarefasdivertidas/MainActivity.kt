@@ -1,6 +1,8 @@
 package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -10,21 +12,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.plusekdanilo.tarefar_tarefasdivertidas.toTarefaList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdminLoginCallback {
     private lateinit var tarefasRecyclerView: RecyclerView
     private lateinit var lockImageView: ImageView
     private lateinit var characterImageView: ImageView
     private var loggedUserId: Int = -1
     private lateinit var dbHelper: DatabaseHelper
-
-    // Variáveis pro codego experimental da Su
     private lateinit var tarefaViewModel: TarefaViewModel
+    private lateinit var tarefaAdapter: TarefaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,37 +55,32 @@ class MainActivity : AppCompatActivity() {
         tarefasRecyclerView = findViewById(R.id.recyclerView)
         lockImageView = findViewById(R.id.lockImageView)
         characterImageView = findViewById(R.id.characterImageView)
-
-        //var tarefas = dbHelper.getTarefasDoUsuario(loggedUserId).toTarefaList()
-
-//        dbHelper.deleteTarefa(1)
-
-        // Inicialize o RecyclerView com um Adapter e um LayoutManager
-        //val tarefaAdapter = TarefaAdapter(tarefas)
-
-        // Codego experimental da Su
         tarefaViewModel = ViewModelProvider(this)[TarefaViewModel::class.java]
 
+        // Crie o Adapter e passe a referência para o ViewModel
+        tarefaAdapter = TarefaAdapter(tarefaViewModel, emptyList(), R.layout.item_tarefa, onEditClickListener = {})
+        tarefaViewModel.tarefaAdapter = tarefaAdapter
+        tarefasRecyclerView.adapter = tarefaAdapter
+
         tarefaViewModel.tarefas.observe(this) { tarefas ->
-            val tarefaAdapter = TarefaAdapter(tarefas)
-            tarefasRecyclerView.adapter = tarefaAdapter
+            // Apenas atualize a lista de tarefas do Adapter existente
+            tarefaAdapter.tarefas = tarefas
+            tarefaAdapter.notifyDataSetChanged()
         }
 
-        val tarefa = tarefaViewModel.getTarefaByTitulo("Teste")
-        if (tarefa == null) { // Cria a tarefa apenas se ela não existir
-            tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste", descricao = "Teste"))
-        }
-
-        // Comando para deletar tarefas excedentes
-//        tarefaViewModel.deleteTarefa(tarefaViewModel.getTarefaByTitulo("Teste")!!.id)
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste7", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste8", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste9", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste10", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste11", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste12", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste13", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste14", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste15", descricao = "Testes"))
 
         //tarefasRecyclerView.adapter = tarefaAdapter
         tarefasRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        //dbHelper.addTarefa("Batata", "Comer batata", loggedUserId, null, dbHelper)
-        //tarefas = dbHelper.getTarefasDoUsuario(loggedUserId).toTarefaList()
-        //tarefaAdapter.notifyDataSetChanged()
 
         lockImageView.setOnClickListener {
             val dialog = AdminLoginDialogFragment()
@@ -98,15 +92,18 @@ class MainActivity : AppCompatActivity() {
             // Apresente a janela com opções de aparência para o personagem
         }
 
-        // Exemplo de como chamar a função addTarefa
-        // (agora passando loggedUserId e a instância de dbHelper)
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
+    // Método chamado quando o login do administrador é bem-sucedido
+    override fun onAdminLoginSuccessful() {
+        Handler(Looper.getMainLooper()).post {
+            val adminDialogFragment = AdminDialogFragment()
+            adminDialogFragment.show(supportFragmentManager, "AdminDialogFragment")
+        }
     }
 }
