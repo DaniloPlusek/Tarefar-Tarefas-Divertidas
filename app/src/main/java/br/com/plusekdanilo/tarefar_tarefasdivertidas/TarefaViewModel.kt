@@ -52,15 +52,17 @@ class TarefaViewModel(application: Application) : AndroidViewModel(application) 
         viewModelJob.cancel() // Cancel the coroutine when ViewModel is cleared
     }
 
-    fun marcarTarefaComoConcluida(tarefa: Tarefa, adapter: TarefaAdapter, lifecycleOwner: LifecycleOwner) { // Adiciona lifecycleOwner
-        viewModelScope.launch(Dispatchers.IO) {
+    fun marcarTarefaComoConcluida(tarefa: Tarefa, adapter: TarefaAdapter) {
+        scope.launch {
             tarefaDAO.marcarTarefaComoConcluida(tarefa.id)
-            withContext(Dispatchers.Main) {
-                tarefaDAO.getAllTarefas().observe(lifecycleOwner) { tarefasAtualizadas -> // Usa observe com lifecycleOwner
-                    tarefas.value = tarefasAtualizadas
-                    adapter.notifyDataSetChanged()
-                }
-            }
+            adapter.notifyItemChanged(tarefa.id)
+
+//            withContext(Dispatchers.Main) {
+//                tarefaDAO.getAllTarefas().observe(lifecycleOwner) { tarefasAtualizadas -> // Usa observe com lifecycleOwner
+//                    tarefas.value = tarefasAtualizadas
+//                    adapter.notifyDataSetChanged()
+//                }
+//            }
         }
     }
 }

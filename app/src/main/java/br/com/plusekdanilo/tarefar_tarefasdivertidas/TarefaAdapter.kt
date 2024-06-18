@@ -20,16 +20,16 @@ class TarefaAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val lifecycleOwner = parent.context as? LifecycleOwner
+//        val layoutInflater = LayoutInflater.from(parent.context)
+//        val lifecycleOwner = parent.context as? LifecycleOwner
         return when (layoutId) {
             R.layout.item_tarefa -> {
-                val view = layoutInflater.inflate(layoutId, parent, false)
+                val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
                 TarefaViewHolderMain(view, viewModel)
             }
             R.layout.item_tarefa_admin -> {
-                val view = layoutInflater.inflate(layoutId, parent, false)
-                TarefaViewHolderAdmin(view, viewModel, this, lifecycleOwner!!, onEditClickListener) // Passa 'this' (o Adapter) e o lifecycleOwner (não nulo)
+                val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
+                TarefaViewHolderAdmin(view, viewModel, this, onEditClickListener) // Passa 'this' (o Adapter)
             }
             else -> throw IllegalArgumentException("Layout inválido")
         }
@@ -67,7 +67,6 @@ class TarefaAdapter(
         itemView: View,
         private val viewModel: TarefaViewModel,
         private val adapter: TarefaAdapter,
-        private val lifecycleOwner: LifecycleOwner,
         private val onEditClickListener: (Tarefa) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
         private val tituloTarefa: TextView = itemView.findViewById(R.id.tituloTarefaTextView)
@@ -83,7 +82,7 @@ class TarefaAdapter(
             }
 
             concluirButton.setOnClickListener {
-                viewModel.marcarTarefaComoConcluida(tarefa, adapter, lifecycleOwner) // Usa o lifecycleOwner e adapter recebidos
+                viewModel.marcarTarefaComoConcluida(tarefa, adapter) // Usa o adapter recebido
             }
 
             deleteButton.setOnClickListener {
