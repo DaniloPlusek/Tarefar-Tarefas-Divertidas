@@ -20,12 +20,17 @@ class TarefaViewModel(application: Application) : AndroidViewModel(application) 
     private val scope = CoroutineScope(Dispatchers.IO)
     lateinit var tarefaAdapter: TarefaAdapter
 
+    val tarefas: LiveData<List<Tarefa>>
+
     init {
         val db = AppDatabase.getDatabase(application)
         tarefaDAO = db.tarefaDAO()
+        tarefas = tarefaDAO.getAllTarefas()
     }
 
-    val tarefas: MutableLiveData<List<Tarefa>> = MutableLiveData(emptyList())
+    fun getAllTarefas(): LiveData<List<Tarefa>> {
+        return tarefaDAO.getAllTarefas()
+    }
 
     fun getTarefaById(id: Int): Tarefa = runBlocking {
         scope.async { tarefaDAO.getTarefa(id) }.await()
