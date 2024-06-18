@@ -83,6 +83,7 @@ class TarefaAdapter(
 
             concluirButton.setOnClickListener {
                 viewModel.marcarTarefaComoConcluida(tarefa, adapter) // Usa o adapter recebido
+                adapter.notifyItemChanged(tarefa.id)
             }
 
             deleteButton.setOnClickListener {
