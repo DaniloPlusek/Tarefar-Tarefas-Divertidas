@@ -15,7 +15,7 @@ class TarefaAdapter(
     private val viewModel: TarefaViewModel,
     var tarefas: List<Tarefa>,
     private val layoutId: Int,
-//    private val showTitleOnly: Boolean = false,
+    private val showTitleOnly: Boolean = false,
     private val onEditClickListener: (Tarefa) -> Unit = {}
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

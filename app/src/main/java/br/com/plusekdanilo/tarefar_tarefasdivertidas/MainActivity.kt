@@ -3,6 +3,7 @@ package br.com.plusekdanilo.tarefar_tarefasdivertidas
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -62,13 +63,16 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
         tarefaViewModel.tarefaAdapter = tarefaAdapter
         tarefasRecyclerView.adapter = tarefaAdapter
 
+        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste70", descricao = "Testes"))
+
         tarefaViewModel.tarefas.observe(this) { tarefas ->
             // Apenas atualize a lista de tarefas do Adapter existente
             tarefaAdapter.tarefas = tarefas
+            Log.d("Tarefas", tarefas.toString())
             tarefaAdapter.notifyDataSetChanged()
         }
 
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste7", descricao = "Testes"))
+
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste8", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste9", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste10", descricao = "Testes"))
