@@ -23,6 +23,6 @@ interface TarefaDAO {
     @Query("DELETE FROM Tarefas WHERE id = :id")
     fun deleteTarefa(id: Int)
 
-    @Query("UPDATE Tarefas SET Status = 1 WHERE status = :id")
+    @Query("UPDATE Tarefas SET Status = NOT Status WHERE id = :id")
     fun marcarTarefaComoConcluida(id: Int)
 }
