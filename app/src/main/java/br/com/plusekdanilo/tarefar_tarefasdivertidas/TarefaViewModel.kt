@@ -60,7 +60,7 @@ class TarefaViewModel(application: Application) : AndroidViewModel(application) 
     fun marcarTarefaComoConcluida(tarefa: Tarefa, adapter: TarefaAdapter) {
         scope.launch {
             tarefaDAO.marcarTarefaComoConcluida(tarefa.id)
-            adapter.notifyItemChanged(tarefa.id)
+//            adapter.notifyItemChanged(tarefa.id)
 
 //            withContext(Dispatchers.Main) {
 //                tarefaDAO.getAllTarefas().observe(lifecycleOwner) { tarefasAtualizadas -> // Usa observe com lifecycleOwner
