@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
         tarefaViewModel.tarefaAdapter = tarefaAdapter
         tarefasRecyclerView.adapter = tarefaAdapter
 
-        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste70", descricao = "Testes"))
-
         tarefaViewModel.tarefas.observe(this) { tarefas ->
             // Apenas atualize a lista de tarefas do Adapter existente
             tarefaAdapter.tarefas = tarefas
@@ -73,7 +71,7 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
         }
 
 
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste8", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Tarefa Exemplo", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste9", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste10", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste11", descricao = "Testes"))
