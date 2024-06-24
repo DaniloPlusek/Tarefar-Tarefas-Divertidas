@@ -31,7 +31,7 @@
             android:name=".CadastroActivity"
             android:screenOrientation="portrait" >
         </activity>
-
+        <activity android:name=".SlidingPuzzleActivity" />
     </application>
 
 </manifest>

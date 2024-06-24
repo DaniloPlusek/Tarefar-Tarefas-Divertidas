@@ -79,6 +79,11 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste13", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste14", descricao = "Testes"))
 //        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste15", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste16", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste17", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste18", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste19", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste20", descricao = "Testes"))
 
         //tarefasRecyclerView.adapter = tarefaAdapter
         tarefasRecyclerView.layoutManager =

@@ -1,5 +1,6 @@
 package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,13 @@ class AdminDialogFragment : DialogFragment() {
         val newDialogButton = view.findViewById<ImageButton>(R.id.newDialogButton)
         newDialogButton.setOnClickListener {
             // Lógica para abrir o diálogo de adicionar nova tarefa
+        }
+
+        val playMiniGameButton = view.findViewById<ImageButton>(R.id.playMinigameButton)
+        playMiniGameButton.setOnClickListener {
+            val intent = Intent(activity, SlidingPuzzleActivity::class.java)
+            startActivity(intent)
+            dismiss() // Fecha o diálogo após iniciar o minijogo
         }
     }
 
