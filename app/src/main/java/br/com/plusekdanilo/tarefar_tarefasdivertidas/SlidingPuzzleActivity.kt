@@ -3,6 +3,7 @@ package br.com.plusekdanilo.tarefar_tarefasdivertidas
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.widget.GridLayout
@@ -69,7 +70,7 @@ class SlidingPuzzleActivity : AppCompatActivity() {
                 imageView.scaleType = ImageView.ScaleType.FIT_XY
 
                 val index = i * gridSize + j
-                if (index != (gridSize * gridSize - 1)) {
+                if (index != (gridSize * gridSize - 1) && imageChunks[index] != null) {
                     imageView.setImageBitmap(imageChunks[index])
                 }
 
@@ -128,7 +129,11 @@ class SlidingPuzzleActivity : AppCompatActivity() {
                 val expectedBitmap = if (index != gridSize * gridSize - 1) imageChunks[index] else null
 
                 val currentDrawable = imageView.drawable
-                val currentBitmap = currentDrawable?.toBitmap()
+                val currentBitmap = if (currentDrawable is BitmapDrawable && currentDrawable.bitmap != null) {
+                    currentDrawable.bitmap
+                } else {
+                    null
+                }
 
                 if ((currentDrawable == null && index != gridSize * gridSize - 1) ||
                     (currentDrawable != null && currentBitmap != expectedBitmap)) {
