@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback, TarefaInterface {
 
         // Recupere o ID do usuário da Intent
         loggedUserId = intent.getIntExtra("USER_ID", -1)
+        Log.d("MainActivity", "ID do usuário recebido da Intent: $loggedUserId") // Adicione este log
 
         if (loggedUserId == -1) {
             // Tratar o caso em que o ID do usuário não foi encontrado (erro no login)
@@ -64,9 +65,10 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback, TarefaInterface {
         tarefasRecyclerView.adapter = tarefaAdapter
 
         tarefaViewModel.tarefas.observe(this) { tarefas ->
-            // Apenas atualize a lista de tarefas do Adapter existente
-            tarefaAdapter.tarefas = tarefas.filter { it.userID == loggedUserId }.sortedBy { it.id }
-            Log.d("Tarefas", tarefas.toString())
+            val tarefasFiltradas = tarefas.filter { it.userID == loggedUserId }.sortedBy { it.id }
+            Log.d("MainActivity", "Tarefas filtradas pelo ID do usuário: $tarefasFiltradas") // Adicione este log
+
+            tarefaAdapter.tarefas = tarefasFiltradas
             tarefaAdapter.notifyDataSetChanged()
         }
 

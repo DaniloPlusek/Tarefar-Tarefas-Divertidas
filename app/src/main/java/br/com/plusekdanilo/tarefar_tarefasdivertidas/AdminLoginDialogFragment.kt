@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 class AdminLoginDialogFragment : DialogFragment() {
 
     private var listener: AdminLoginCallback? = null
+    val cadastroActivity = CadastroActivity()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,12 +49,13 @@ class AdminLoginDialogFragment : DialogFragment() {
             context?.let {
                 val dbHelper = DatabaseHelper(it)
                 val cursor = dbHelper.getResponsavel(username)
+                val senhaDigitadaHash = cadastroActivity.gerarHashSenha(password)
 
                 if (cursor.moveToFirst()) {
                     val senhaIndex = cursor.getColumnIndex("Senha")
                     if (senhaIndex != -1) {
                         val dbPassword = cursor.getString(senhaIndex)
-                        if (dbPassword == password) {
+                        if (dbPassword == senhaDigitadaHash) {
                             dismiss()
                             listener?.onAdminLoginSuccessful() // Notifica a MainActivity
                         } else {

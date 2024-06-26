@@ -16,6 +16,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    val cadastroActivity = CadastroActivity()
 
     fun login(username: String, password: String) {
         uiScope.launch { // Usando uiScope aqui
@@ -23,8 +24,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             if (cursor.moveToFirst()) {
                 val senhaIndex = cursor.getColumnIndex("Senha")
                 if (senhaIndex != -1) {
-                    val dbPassword = cursor.getString(senhaIndex)
-                    _loginResult.postValue(dbPassword == password)
+                    val dbPasswordHash = cursor.getString(senhaIndex)
+                    val senhaDigitadaHash = cadastroActivity.gerarHashSenha(password) // Gere o hash da senha digitada
+                    _loginResult.postValue(dbPasswordHash == senhaDigitadaHash)
                 } else {
                     _loginResult.postValue(false) // Coluna 'Senha' não existe
                 }
