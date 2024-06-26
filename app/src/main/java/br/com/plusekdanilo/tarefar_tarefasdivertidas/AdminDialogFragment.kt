@@ -16,6 +16,7 @@ class AdminDialogFragment : DialogFragment() {
 
     private lateinit var tarefaViewModel: TarefaViewModel
     private lateinit var tarefaAdapter: TarefaAdapter
+    private var loggedUserId: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,

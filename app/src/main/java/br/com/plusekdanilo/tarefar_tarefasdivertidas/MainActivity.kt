@@ -65,25 +65,12 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
 
         tarefaViewModel.tarefas.observe(this) { tarefas ->
             // Apenas atualize a lista de tarefas do Adapter existente
-            tarefaAdapter.tarefas = tarefas
+            tarefaAdapter.tarefas = tarefas.filter { it.userID == loggedUserId }.sortedBy { it.id }
             Log.d("Tarefas", tarefas.toString())
             tarefaAdapter.notifyDataSetChanged()
         }
 
-
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Tarefa Exemplo", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste9", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste10", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste11", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste12", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste13", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste14", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste15", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste16", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste17", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste18", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste19", descricao = "Testes"))
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Teste20", descricao = "Testes"))
+//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Tarefa Exemplo", descricao = "Testes", userID = loggedUserId))
 
         //tarefasRecyclerView.adapter = tarefaAdapter
         tarefasRecyclerView.layoutManager =

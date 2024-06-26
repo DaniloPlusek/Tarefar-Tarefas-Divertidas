@@ -3,12 +3,12 @@ package br.com.plusekdanilo.tarefar_tarefasdivertidas
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Tarefas")
-data class Tarefa(
+@Entity(tableName = "Usuario")
+data class Usuario(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val userID: Int,
-    val titulo: String,
-    val descricao: String,
-    val status: Int = 0
+    val nome: String,
+    val idade: Int,
+    val login: String,
+    val senha: String
 )
