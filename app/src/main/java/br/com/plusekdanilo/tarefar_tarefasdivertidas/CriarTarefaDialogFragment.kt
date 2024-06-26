@@ -59,7 +59,7 @@ class CriarTarefaDialogFragment(var listener: TarefaInterface? = null) : DialogF
         super.onResume()
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         params?.width = (resources.displayMetrics.widthPixels * 0.35).toInt()
-        params?.height = (resources.displayMetrics.heightPixels * 0.65).toInt()
+        params?.height = (resources.displayMetrics.heightPixels * 0.55).toInt()
         dialog?.window?.attributes = params as WindowManager.LayoutParams?
     }
 }
