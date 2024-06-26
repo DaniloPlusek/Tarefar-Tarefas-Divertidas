@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity(), AdminLoginCallback {
+class MainActivity : AppCompatActivity(), AdminLoginCallback, TarefaInterface {
     private lateinit var tarefasRecyclerView: RecyclerView
     private lateinit var lockImageView: ImageView
     private lateinit var characterImageView: ImageView
@@ -70,8 +70,6 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
             tarefaAdapter.notifyDataSetChanged()
         }
 
-//        tarefaViewModel.insertTarefa(Tarefa(titulo = "Tarefa Exemplo", descricao = "Testes", userID = loggedUserId))
-
         //tarefasRecyclerView.adapter = tarefaAdapter
         tarefasRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -99,5 +97,9 @@ class MainActivity : AppCompatActivity(), AdminLoginCallback {
             val adminDialogFragment = AdminDialogFragment()
             adminDialogFragment.show(supportFragmentManager, "AdminDialogFragment")
         }
+    }
+
+    override fun criarTarefa(titulo: String, descricao: String) {
+        tarefaViewModel.insertTarefa(Tarefa(titulo = titulo, descricao = descricao, userID = loggedUserId))
     }
 }

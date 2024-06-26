@@ -45,7 +45,8 @@ class AdminDialogFragment : DialogFragment() {
 
         val newDialogButton = view.findViewById<ImageButton>(R.id.newDialogButton)
         newDialogButton.setOnClickListener {
-            // Lógica para abrir o diálogo de adicionar nova tarefa
+            val criarTarefaDialog = CriarTarefaDialogFragment()
+            criarTarefaDialog.show(parentFragmentManager, "criar_tarefa_dialog")
         }
 
         val playMiniGameButton = view.findViewById<ImageButton>(R.id.playMinigameButton)
