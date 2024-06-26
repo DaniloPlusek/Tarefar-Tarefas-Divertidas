@@ -2,6 +2,7 @@ package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
         val passwordEditText = findViewById<EditText>(R.id.password)
         val loginButton = findViewById<Button>(R.id.login)
         val registerTextView = findViewById<TextView>(R.id.register)
+        val cadastroActivity = CadastroActivity()
 
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString()
@@ -32,11 +34,15 @@ class LoginActivity : AppCompatActivity() {
                 val senhaIndex = cursor.getColumnIndex("Senha")
                 if (senhaIndex != -1) {
                     val dbPassword = cursor.getString(senhaIndex)
-                    if (dbPassword == password) {
+                    val senhaDigitadaHash = cadastroActivity.gerarHashSenha(password)
+                    Log.d("LoginActivitySenha", "Senha do usuário obtida do cursor: $dbPassword") // Adicione este log
+                    Log.d("LoginActivitySenhaDigitada", "Senha digitada pelo usuário: $senhaDigitadaHash") // Adicione este log
+                    if (dbPassword == senhaDigitadaHash) {
                         // Login bem-sucedido
                         val idUsuarioIndex = cursor.getColumnIndex("ID_Usuario")
                         if (idUsuarioIndex != -1) {
                             val idUsuario = cursor.getInt(idUsuarioIndex)
+                            Log.d("LoginActivity", "ID do usuário obtido do cursor: $idUsuario") // Adicione este log
 
                             // Passe o ID do usuário para a MainActivity através da Intent
                             val intent = Intent(this, MainActivity::class.java)

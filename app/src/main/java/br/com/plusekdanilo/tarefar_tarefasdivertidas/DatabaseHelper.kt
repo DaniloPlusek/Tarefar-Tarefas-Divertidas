@@ -138,13 +138,13 @@ class DatabaseHelper(context: Context) :
         return db.rawQuery("SELECT * FROM Usuario", null)
     }
 
-    fun addResponsavel(nome: String, idade: Int, login: String, senha: String) {
+    fun addResponsavel(nome: String, idade: Int, login: String, senhaHash: String) {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put("Nome", nome)
         values.put("Idade", idade)
         values.put("Login", login)
-        values.put("Senha", senha)
+        values.put("Senha", senhaHash)
 
         db.insert("Responsavel", null, values)
         db.close()

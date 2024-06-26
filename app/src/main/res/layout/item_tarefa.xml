@@ -10,6 +10,7 @@
     app:cardBackgroundColor="@android:color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemTarefa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/card_border">
@@ -18,11 +19,11 @@
             android:id="@+id/iconeTarefa"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_tarefa_exemplo"
             app:layout_constraintBottom_toTopOf="@+id/tituloTarefa"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tituloTarefa"
@@ -31,10 +32,11 @@
             android:padding="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/iconeTarefa"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/iconeTarefa" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

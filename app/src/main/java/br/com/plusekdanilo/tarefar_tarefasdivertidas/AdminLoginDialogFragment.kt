@@ -1,5 +1,6 @@
 package br.com.plusekdanilo.tarefar_tarefasdivertidas
 
+import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -12,29 +13,51 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 
 class AdminLoginDialogFragment : DialogFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+    private var listener: AdminLoginCallback? = null
+    val cadastroActivity = CadastroActivity()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is AdminLoginCallback) {
+            listener = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.admin_login_dialog, container, false)
+        return view
+    }
 
-        val usernameEditText = view.findViewById<EditText>(R.id.username)
-        val passwordEditText = view.findViewById<EditText>(R.id.password)
-        val loginButton = view.findViewById<Button>(R.id.login)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        loginButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
+        val loginButton = view?.findViewById<Button>(R.id.login)
+        loginButton?.setOnClickListener {
+            val username = view?.findViewById<EditText>(R.id.username)?.text.toString()
+            val password = view?.findViewById<EditText>(R.id.password)?.text.toString()
 
-            // Cria uma instância de DatabaseHelper e verifica se o responsável existe no banco de dados
             context?.let {
                 val dbHelper = DatabaseHelper(it)
                 val cursor = dbHelper.getResponsavel(username)
+                val senhaDigitadaHash = cadastroActivity.gerarHashSenha(password)
 
                 if (cursor.moveToFirst()) {
                     val senhaIndex = cursor.getColumnIndex("Senha")
                     if (senhaIndex != -1) {
                         val dbPassword = cursor.getString(senhaIndex)
-                        if (dbPassword == password) {
-                            // Se a autenticação for bem-sucedida, feche o diálogo
+                        if (dbPassword == senhaDigitadaHash) {
                             dismiss()
+                            listener?.onAdminLoginSuccessful() // Notifica a MainActivity
                         } else {
                             Toast.makeText(it, "Senha incorreta", Toast.LENGTH_SHORT).show()
                         }
@@ -46,8 +69,6 @@ class AdminLoginDialogFragment : DialogFragment() {
                 }
             }
         }
-
-        return view
     }
 
     override fun onResume() {
@@ -59,5 +80,4 @@ class AdminLoginDialogFragment : DialogFragment() {
         params.height = (displayMetrics.heightPixels * 0.65).toInt()
         dialog!!.window!!.attributes = params as WindowManager.LayoutParams
     }
-
 }
